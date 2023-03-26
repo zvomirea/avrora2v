@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<!-- Report bugs and patches to ed@ds-servers.com -->
+<html>
+	<head>
+		<title>Student</title>
+<!-- 	<link type="text/css" rel="stylesheet" href="https://api.ds-servers.com/scripts/DSuserInterface/css/style.min.css" /> -->
+<!-- 	<link type="text/css" rel="stylesheet" href="https://ds-servers.com/css/stylesheet.min.css" /> -->
+		<link rel="icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script type="text/javascript" src="https://mirea.aco-avrora.ru/student/js/config.js?3"></script>
+		<script type="text/javascript" src="https://mirea.aco-avrora.ru/student/js/protocol.js?1"></script>
+		<script type="text/javascript" src="qrc:///qtwebchannel/qwebchannel.js"></script>
+		<script type="text/javascript">
+			var _skipNext = false;
+			var DSconf = {
+				langUrl: 'https://mirea.aco-avrora.ru/student/js/lang-RU.js'
+				,websocket: {
+					use: false
+					// ,registry_url: (ARMconfig.serverSecure ? 'wss' : 'ws')+'://'+ARMconfig.serverHost+(ARMconfig.serverPort ? ':'+ARMconfig.serverPort : '')+'/'
+//					 ,registry_url: 'wss://mirea.aco-avrora.ru/student/arm/'
+					,registry_url: 'ws://localhost:8001'
+				}
+				,highCharts: {
+					theme: 'dark-blue'
+				}
+				,syntaxhighlighter: {
+					// theme: 'Midnight'
+					forceEnable: true
+				}
+				,checkbox2: true
+				,combo2: true
+				,mainmod: 'DSUId'
+				,tinymce: {
+					menubar: 'edit insert format table'
+					,skin: 'lightgray'
+					// ,toolbar1: "insertfile undo redo | styleselect | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | forecolor backcolor | fullscreen | pagebreak"
+					,toolbar1: "undo redo | styleselect | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor backcolor | fullscreen | pagebreak"
+					,toolbar2: ""
+					//,theme_advanced_resizing: false
+					,branding: false
+					,menu: {
+						// ,edit: {title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall'}
+						edit: {title: 'Edit', items: 'undo redo | cut copy | selectall | searchreplace'}
+						,insert: {title: 'Insert', items: /*image */'charmap insertdatetime'}
+						,format: {title: 'Format', items: 'bold italic underline strikethrough superscript subscript | formats | removeformat'}
+						,table: {title: 'Table', items: 'inserttable tableprops deletetable | cell row column'}
+						//,tools: {title: 'Tools', items: 'spellchecker code'}
+					}
+					,paste_preprocess: function(plugin, args){
+						if(_skipNext){
+							_skipNext = false;
+							return;
+						}
+						if(!DS.page.cb.canPaste(args.content, !args.plain)){
+							DS.msg('Вставка запрещена', 'red');
+							args.content = '';
+						}
+						if(args.plain){
+							_skipNext = true;
+						}
+						return;
+						// console.warn(args);
+						//if(!DS.page.cb.canPaste(args.content)){
+							var txt = args.content.replace(/\<br\>/g, '\n').replace(/\<br\s\/\>/g, '\n');
+							var isHtml = txt.indexOf('<') >= 0;
+							if(isHtml && txt.indexOf('<p>') == 0 ){
+
+							}
+
+
+							if(isHtml){
+								txt = args.content;
+							}
+							else{
+								txt = txt.replace(/\&nbsp\;/g, ' ').replace(/\&lt\;/g, '<').replace(/\&gt\;/g, '>').replace(/\&amp\;/g, '&');
+							}
+
+							if(!DS.page.cb.canPaste(txt, isHtml)){
+								DS.msg('Вставка запрещена', 'red');
+								args.content = '';
+							}
+						//}
+					}
+					,plugins: [
+						"advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
+						"searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+						"table contextmenu directionality emoticons template textcolor paste textcolor colorpicker textpattern ",
+						' spoiler autoheight save'
+					]
+					//,paste_as_text: true
+					,init_instance_callback: function(editor){
+						// console.warn(editor);
+						// tinymce.activeEditor.getDoc().documentElement.style.overflowY = 'auto';
+						editor.getDoc().documentElement.style.overflowY = 'auto';
+
+						editor.on('copy', function(e){
+							console.warn(e);
+							// DS.page.cb.onCopy(editor.getWin().getSelection().toString());
+							// DS.page.cb.onCopy(editor.getWin().getSelection().getContent({format: 'html'}));
+							DS.page.cb.onCopy(editor.selection.getContent({format: 'text'}), editor.selection.getContent({format: 'html'}));
+						});
+						editor.on('cut', function(e){
+							console.warn(e);
+							DS.page.cb.onCopy(editor.selection.getContent({format: 'text'}), editor.selection.getContent({format: 'html'}));
+						});
+						if(DS.ArmAPI){
+							if(DS.ArmAPI.onKD){
+								editor.on('keydown', DS.ArmAPI.onKD);
+							}
+							if(DS.ArmAPI.onChar){
+								editor.on('keypress', DS.ArmAPI.onChar);
+							}
+						}
+					}
+				}
+				// ,img_url: 'https://api.ds-servers.com/scripts/DSuserInterface/img/'
+				,img_url: 'https://dsui.dsncdn.net/scripts/DSuserInterface/img/'
+
+			};
+
+			window.__noCacheNumber = 140;
+
+			/* var _key = 0;
+			window.onkeydown = function(e){
+				if(!e.repeat && (e.keyCode == 16 || e.keyCode == 17 || e.keyCode == 123)){
+					++_key;
+					if(_key == 3){
+						window.onerror = function(msg, url, lineNo, columnNo, error){
+							var string = msg.toLowerCase();
+							var substring = "script error";
+							if(string.indexOf(substring) > -1){
+								DS.invokeEvent('arm/error', 'Script Error: See Console for Detail');
+							}
+							else{
+								var message = [
+									'Message: ' + msg,
+									'URL: ' + url,
+									'Line: ' + lineNo,
+									'Column: ' + columnNo,
+									'Stack: ' + error && error.stack || '',
+									'Error object: ' + JSON.stringify(error),
+								].join('\n').split('mirea.aco-avrora.ru').join('&lt;optimized away&gt;').split('mirea2.aco-avrora.ru').join('&lt;optimized away&gt;');
+
+								DS.invokeEvent('arm/error', message);
+							}
+
+							return(false);
+						};
+						DS.msg('Отображение ошибок включено', 'green');
+					}
+				}
+			};
+			window.onkeyup = function(e){
+				if(e.keyCode == 16 || e.keyCode == 17 || e.keyCode == 123){
+					--_key;
+				}
+			};*/
+
+			window.onerror = function(msg, url, lineNo, columnNo, error){
+				var string = msg.toLowerCase();
+				var substring = "script error";
+				if(string.indexOf(substring) > -1){
+					// DS.invokeEvent('arm/error', 'Script Error: See Console for Detail');
+					DS.armCmd('onError', 'Script Error: See Console for Detail');
+				}
+				else{
+					var message = [
+						'Message: ' + msg,
+						'URL: ' + url,
+						'Line: ' + lineNo,
+						'Column: ' + columnNo,
+						'Stack: ' + error && error.stack || '',
+						'Error object: ' + JSON.stringify(error),
+					].join('\n').split('mirea.aco-avrora.ru').join('&lt;optimized away&gt;').split('mirea2.aco-avrora.ru').join('&lt;optimized away&gt;');
+
+					DS.armCmd('onError', message);
+				}
+
+				return(false);
+			};
+
+		</script>
+		<script type="text/javascript" src="https://dsui.dsncdn.net/scripts/DSuserInterface/js/core0.min.js?5"></script>
+		<script type="text/javascript" src="https://mirea.aco-avrora.ru/student/js/ws.js?5"></script>
+		<script type="text/javascript" src="https://mirea.aco-avrora.ru/student/js/crypto-js.min.js"></script>
+		<script type="text/javascript" src="https://mirea.aco-avrora.ru/student/js/proxy.js?20"></script>
+		<!-- <script type="text/javascript" src="js/ws.js?3"></script>
+		<script type="text/javascript" src="protocol.js"></script> -->
+		<script type="text/javascript" src="js/app.js"></script>
+		<script type="text/javascript" src="https://mirea.aco-avrora.ru/student/js/modules/task/module.js?10"></script>
+		<script type="text/javascript" src="https://mirea.aco-avrora.ru/student/js/modules/test/module.js?2"></script>
+		<script type="text/javascript" src="https://mirea.aco-avrora.ru/student/js/modules/quit/module.js?1"></script>
+		<script type="text/javascript" src="https://mirea.aco-avrora.ru/student/js/modules/lecture/module.js?3"></script>
+		<script type="text/javascript" src="https://mirea.aco-avrora.ru/student/js/modules/lecture-recorded/module.js?1"></script>
+		<script type="text/javascript" src="https://mirea.aco-avrora.ru/student/js/modules/comission/module.js?3"></script>
+		<!-- <script type="text/javascript" src="js/modules/trainer/module.js"></script> -->
+		<script type="text/javascript" src="https://mirea.aco-avrora.ru/student/js/native-window.js?2"></script>
+
+		<link rel="stylesheet" type="text/css" href="https://mirea.aco-avrora.ru/student/css/style.css?4" />
+		 <link rel="stylesheet" type="text/css" href="https://mirea.aco-avrora.ru/student/css/style-light.css" />
+		<!-- <link rel="stylesheet" type="text/css" href="css/style-dark-blue.css" /> -->
+	</head>
+	<body>
+		<div id="wrapper"></div>
+		<script type="text/javascript">//<!--
+			var o = document.createElement('div');
+			o.id = 'DSitems';
+			document.body.appendChild(o);
+			o.innerHTML += '<div id="DSwindowFrame" style="position: absolute; border: #cecfff 2px solid; display: none; z-index: 100000">&nbsp;</div><div style="position: fixed; display: block; z-index: 90000; top: 0px; left: 0px; background: #000022; opacity: 0.5; width: 100%; height: 100%; display: none;box-shadow: 0 0 100px #77bbff inset;" id="DSwindowBlock"></div><div style="position: fixed; display: block; z-index: 90000; top: 0px; left: 0px; background: #550000; opacity: 0.5; width: 100%; height: 100%; display: none;box-shadow: 0 0 100px #ff5577 inset;" id="DSwindowBlockred"></div><div style="position: fixed; display: block; z-index: 90000; top: 0px; left: 0px; background: #002200; opacity: 0.5; width: 100%; height: 100%; display: none;box-shadow: 0 0 100px #77ffbb inset;" id="DSwindowBlockgreen"></div><div style="position: fixed; display: block; z-index: -1; top: 0px; left: 0px; background: #550000; opacity: 0.5; width: 100%; height: 100%; display: none;box-shadow: 0 0 100px #ff5577 inset;" id="DSwindowBlockAlertred"></div><div style="position: fixed; display: block; z-index: -1; top: 0px; left: 0px; background: #002200; opacity: 0.5; width: 100%; height: 100%; display: none;box-shadow: 0 0 100px #77ffbb inset;" id="DSwindowBlockAlertgreen"></div>';
+			DS.initiated = true;
+			DS.events.onReady();
+		//--></script>
+	</body>
+</html>

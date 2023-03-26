@@ -1,0 +1,75 @@
+.task_mod_left {
+    background: #7ab1fa;
+}
+
+.task_group {
+    background-image: url("https://catherineasquithgallery.com/uploads/posts/2021-02/1613243504_106-p-temno-sinii-fon-anime-179.jpg");
+}
+
+.task_item {
+    border-color: #b3f375
+}
+
+.task_item_meta {
+    color: #ccc;
+}
+
+.task_item:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.task_mod_left_tabs > div {
+    background-color: #3b5875;
+}
+
+.task_mod_left_tabs > div:hover, .task_mod_left_tabs > div.active {
+    background: #587fa6;
+    color: #000;
+}
+
+
+
+/* task process */
+
+.task_process_top {
+    background-image: url("https://catherineasquithgallery.com/uploads/posts/2021-02/1613243504_106-p-temno-sinii-fon-anime-179.jpg");
+}
+
+.task_process_left {
+    background-image: url("https://catherineasquithgallery.com/uploads/posts/2021-02/1613243504_106-p-temno-sinii-fon-anime-179.jpg");
+}
+
+.task_process_right {
+    background-image: url("https://catherineasquithgallery.com/uploads/posts/2021-02/1613243504_106-p-temno-sinii-fon-anime-179.jpg");
+}
+
+.task_process_left > div {
+    border-top: 1px outset #84a9d0;
+    border-bottom: 2px outset #2aded2;
+    background-color: rgba(255, 255, 255, 0.13);
+}
+
+.task_process_left > div:hover {
+    background-color: rgba(255, 255, 255, 0.30);
+}
+
+.task_process_left > div.active {
+    background-color: rgba(0,255,0,0.2);
+    color: black;
+}
+
+/* chat */
+
+.task_chat_wrap {
+
+    background: #223242;
+
+}
+.task_chat_btn {
+    background-image: url(/student/img/chat_dark.svg);
+}
+
+.task_alert.good {
+    color: rgb(202, 243, 255);
+    background: rgb(2, 99, 111) none repeat scroll 0% 0%;
+}
