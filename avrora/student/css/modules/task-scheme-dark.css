@@ -1,0 +1,47 @@
+body > .mxPopupMenu {
+	background-color: rgba(0, 16, 32, 0.9)!important;
+	border: 1px solid #4d7db8!important;
+	box-shadow: 0 0 10px rgb(48, 80, 128), 0 0 50px #305080 inset!important;
+}
+
+div.mxPopupMenu {
+	background-image: none!important;
+}
+
+tr.mxPopupMenuItemHover {
+	background: #364f6e!important;
+	color: #fff!important;
+}
+
+
+foreignObject > div {
+    color: 
+    white !important;
+}
+
+path {
+    /* stroke: white !important; */
+    stroke: #0f0 !important;
+	stroke-width: 2px;
+}
+
+svg > g > g:nth-child(2) rect[fill^="#"], 
+svg > g > g:nth-child(2) ellipse, 
+svg > g > g:nth-child(2) path[fill^="#"] {
+    fill: rgba(15, 44, 74, 0.78);
+	stroke: white !important;
+}
+
+.mxCellEditor {
+	color: white!important;
+}
+
+.geHint {
+	color: black!important;
+}
+
+/* svg > g > g:nth-child(2) rect[fill^="#"], 
+svg > g > g:nth-child(2) ellipse, 
+svg > g > g:nth-child(2) path[fill^="#"]
+
+svg > g > g:nth-child(2) rect[fill^="#"], svg > g > g:nth-child(2) ellipse, svg > g > g:nth-child(2) path[fill^="#"] */

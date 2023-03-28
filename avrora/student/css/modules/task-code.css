@@ -1,0 +1,186 @@
+
+
+
+.CodeMirror { height: 100%; border: 1px solid #ddd; }
+  /*.CodeMirror-scroll { max-height: 200px; }*/
+.CodeMirror pre { padding-left: 7px; line-height: 1.25; }
+
+.editor_tab {
+	display: inline-block;
+	line-height: 30px;
+	padding: 0 30px 0 10px;
+	cursor: default;
+	position: relative;
+	border: 1px solid rgba(227, 227, 227, 1);
+	margin-right: 5px;
+	border-radius: 2px 2px 0 0;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
+}
+.editor_tab.changed{
+	background: rgba(255, 0, 0, 0.1);
+}
+.editor_tab.active{
+	background: rgba(255, 255, 255, 0.3);
+	height: 30px;
+	top: -5px;
+	border-bottom: 5px solid rgb(97, 58, 190);
+}
+
+.editor_tab:hover {
+	background: rgba(255, 255, 255, 0.2);
+}
+.editor_tab.changed:hover {
+	background: rgba(255, 0, 0, 0.15);
+}
+.editor_tab.active:hover {
+	background: rgba(255,255,255,0.3);
+}
+
+.editor_tab i{
+	border-radius: 3px;
+	background-color: rgba(223, 223, 223, 1);
+	position: absolute;
+	top: 8px; 
+	right: 4px;
+	width: 15px;
+	height: 15px;
+	background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjI0cHgiIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDM1NyAzNTciIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDM1NyAzNTc7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8ZyBpZD0iY2xvc2UiPgoJCTxwb2x5Z29uIHBvaW50cz0iMzU3LDM1LjcgMzIxLjMsMCAxNzguNSwxNDIuOCAzNS43LDAgMCwzNS43IDE0Mi44LDE3OC41IDAsMzIxLjMgMzUuNywzNTcgMTc4LjUsMjE0LjIgMzIxLjMsMzU3IDM1NywzMjEuMyAgICAgMjE0LjIsMTc4LjUgICAiIGZpbGw9IiM0MjQyNDIiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K);
+	background-position: center center;
+	background-size: 7.5px;
+	background-repeat: no-repeat;
+}
+.editor_tab i:hover{
+	border-radius: 3px;
+	background-color: rgba(181, 181, 181, 1);
+}
+
+
+#element-editor_area_drag {
+    display: inline-block;
+    background-color: rgba(103, 100, 100, 0.3);
+    position: absolute;
+    top: 0;
+    left: 200px;
+    width: 10px;
+    bottom: 0;
+    cursor: ew-resize;
+}
+
+#element-editor_area_left {
+
+    display: inline-block;
+    background-color: rgba(115, 119, 162, 0.22);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 200px;
+    bottom: 0px;
+
+}
+
+.code-base {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	overflow: hidden
+}
+
+/* .-debugger .code-base {
+	bottom: 20px;
+} */
+
+
+
+.debug-window {
+  position: absolute;
+  background: #ccc;
+  left: 0;
+  right: 0;
+  display: none!important;
+}
+.debug-window.-show {
+	display: block!important;
+	z-index: 9;
+}
+.window-drag {
+  position: absolute;
+  top: -10px;
+  height: 10px;
+  cursor: ns-resize;
+  left: 0;
+  right: 0;
+}
+.debug-log {
+  top: 26px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  overflow-y: auto;
+  bottom: 30px;
+  
+  white-space: pre-wrap;
+  color: #000;
+}
+.debug-input {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  /*! right: 0; */
+  width: 100%;
+  box-sizing: border-box;
+  height: 30px;
+}
+
+
+
+.debug-log > i {
+  opacity: 0.5;
+}
+
+.debug-log > .-user-input {
+  color: #080;
+}
+
+
+.debugger-watch {
+	font-size: 12px;
+}
+
+.debugger-watch .-collapse-button,
+.debugger-watch .-collapse-button-spacer {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+}
+
+.debugger-watch .-collapse-button {
+	cursor: pointer;
+	position: relative;
+	left: -1px;
+	top: 3px;
+	background-position: 50% 50%;
+}
+.debugger-watch .-debugger-cell {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.debugger-watch .ds-grid-data-row {
+	height: 18px;
+}
+
+
+
+
+
+
